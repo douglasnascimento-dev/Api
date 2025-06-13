@@ -1,4 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); const HTTP_STATUS = Object.freeze({
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _dotenv = require('dotenv'); var _dotenv2 = _interopRequireDefault(_dotenv);
+
+_dotenv2.default.config();
+
+ const HTTP_STATUS = Object.freeze({
   OK: 200,
   CREATED: 201,
   BAD_REQUEST: 400,

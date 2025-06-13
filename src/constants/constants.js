@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const HTTP_STATUS = Object.freeze({
   OK: 200,
   CREATED: 201,
