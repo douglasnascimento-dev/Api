@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-import {url} from '../constants/constants';
+import {URLCONSTANTS} from '../constants/constants';
 
 export default class Upload extends Model {
   static init(sequelize) {
@@ -29,7 +29,7 @@ export default class Upload extends Model {
         url: {
           type: Sequelize.VIRTUAL,
           get() {
-            return `${url.url}/images/${this.getDataValue('filename')}`;
+            return `${URLCONSTANTS.url}/images/${this.getDataValue('filename')}`;
           }
         }
       },

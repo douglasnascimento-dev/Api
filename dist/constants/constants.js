@@ -16,6 +16,6 @@
   SALT_ROUNDS: 8,
 }); exports.VALIDATION_CONSTANTS = VALIDATION_CONSTANTS;
 
- const url = {
+ const URLCONSTANTS = {
   url: process.env.APP_URL
-}; exports.url = url;
+}; exports.URLCONSTANTS = URLCONSTANTS;

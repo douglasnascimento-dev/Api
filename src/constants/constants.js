@@ -16,6 +16,6 @@ export const VALIDATION_CONSTANTS = Object.freeze({
   SALT_ROUNDS: 8,
 });
 
-export const url = {
+export const URLCONSTANTS = {
   url: process.env.APP_URL
 };

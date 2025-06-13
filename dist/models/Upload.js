@@ -29,7 +29,7 @@ var _constants = require('../constants/constants');
         url: {
           type: _sequelize2.default.VIRTUAL,
           get() {
-            return `${_constants.url.url}/images/${this.getDataValue('filename')}`;
+            return `${_constants.URLCONSTANTS.url}/images/${this.getDataValue('filename')}`;
           }
         }
       },
