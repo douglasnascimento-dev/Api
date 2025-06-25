@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import {resolve} from 'path';
+import { resolve } from 'path';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import homeRoutes from './routes/home.js';
 import userRoutes from './routes/user.js';
@@ -9,6 +11,21 @@ import alunoRoutes from './routes/aluno.js';
 import uploadRoutes from './routes/upload.js';
 
 import './database/index.js';
+
+const whiteList = [
+  'https://projeto1.douglasnascimento.dev.br',
+  'http://localhost:5173'
+];
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
 
 dotenv.config();
 
@@ -20,9 +37,10 @@ class App {
   }
 
   middlewares() {
+    this.app.use(cors(corsOptions));
+    this.app.use(helmet);
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    console.log('Servindo arquivos estáticos de:', resolve(__dirname, '..', 'uploads', 'images'));
     this.app.use('/images', express.static(resolve(__dirname, '..', 'uploads', 'images')));
   }
 

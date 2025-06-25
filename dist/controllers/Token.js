@@ -28,7 +28,7 @@ class Token {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
 
-    return res.json({token});
+    return res.json({token, user: {nome: user.nome, id: user.id, email}});
   }
 }
 
