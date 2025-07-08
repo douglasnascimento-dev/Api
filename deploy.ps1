@@ -18,20 +18,21 @@ $pm2AppName = "api-rest"
 $commitMessage = Read-Host "Digite a mensagem para o commit"
 
 if ([string]::IsNullOrWhiteSpace($commitMessage)) {
-    Write-Host "ERRO: A mensagem de commit não pode ser vazia. Abortando." -ForegroundColor Red
-    exit
+    Write-Host "ERRO: A mensagem de commit não pode ser vazia. Abortando." -ForegroundColor Red
+    exit
 }
 
 # 2. Executa os comandos Git locais
 Write-Host "--- ETAPA 1: Executando comandos locais ---" -ForegroundColor Cyan
+npm build
 git add .
 git commit -m "$commitMessage"
 git push origin $branchName
 
 # Verifica se o push falhou
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "ERRO: O comando 'git push' falhou. O script foi interrompido." -ForegroundColor Red
-    exit
+    Write-Host "ERRO: O comando 'git push' falhou. O script foi interrompido." -ForegroundColor Red
+    exit
 }
 
 Write-Host "Push para o repositório remoto concluído com sucesso!" -ForegroundColor Green

@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import User from '../models/User.js';
 import { HTTP_STATUS } from '../constants/constants.js';
 
@@ -8,18 +9,18 @@ class UserController {
     try {
       novoUser = await User.create(req.body);
     } catch (error) {
-      // Adicione este console.log para descobrir a causa raiz do erro
+      // Este console.log vai mostrar a VERDADEIRA causa do erro
       console.log('ERRO AO CRIAR USUÁRIO:', error);
 
       // Verifica se a lista de erros específica do Sequelize existe
       if (error.errors && Array.isArray(error.errors)) {
         const errorMessages = error.errors.map((err) => err.message);
 
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: errorMessages });
+        return res.status(400).json({ errors: errorMessages });
       }
 
       // Se não, retorna uma mensagem de erro mais genérica
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({
+      return res.status(400).json({
         errors: [error.message || 'Ocorreu um erro ao criar o usuário.'],
       });
     }
