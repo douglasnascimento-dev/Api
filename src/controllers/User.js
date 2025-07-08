@@ -61,6 +61,7 @@ class UserController {
 
       if (!user) {
         return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+
       }
 
       await user.update(req.body);
