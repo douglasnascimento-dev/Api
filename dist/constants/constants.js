@@ -1,0 +1,25 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _dotenv = require('dotenv'); var _dotenv2 = _interopRequireDefault(_dotenv);
+
+_dotenv2.default.config();
+
+ const HTTP_STATUS = Object.freeze({
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+}); exports.HTTP_STATUS = HTTP_STATUS;
+
+ const VALIDATION_CONSTANTS = Object.freeze({
+  MIN_NAME_LENGTH: 3,
+  MAX_NAME_LENGTH: 255,
+  MIN_PASSWORD_LENGTH: 6,
+  MAX_PASSWORD_LENGTH: 50,
+  SALT_ROUNDS: 8,
+}); exports.VALIDATION_CONSTANTS = VALIDATION_CONSTANTS;
+
+ const URLCONSTANTS = {
+  url: process.env.APP_URL
+}; exports.URLCONSTANTS = URLCONSTANTS;
