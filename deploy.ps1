@@ -65,8 +65,6 @@ function Invoke-RemoteCommands {
 
     Write-Host "--- ETAPA 2: Executando comandos no servidor via SSH ---" -ForegroundColor Cyan
 
-    # O uso de '&&' garante que o próximo comando só executa se o anterior tiver sucesso.
-    # Isso impede que o PM2 reinicie uma aplicação quebrada se o 'git pull' ou 'npm install' falhar.
     $remoteCommands = @"
 cd $serverProjectPath && `
 echo 'Executando git pull...' && git pull origin $branchName && `
@@ -101,5 +99,9 @@ try {
 catch {
     # Captura qualquer erro lançado durante o processo
     Write-Host $_.Exception.Message -ForegroundColor Red
-    exit 1
+}
+finally {
+    # ✅ ESTE BLOCO É NOVO E IMPEDE A JANELA DE FECHAR
+    Write-Host "O script terminou. Pressione Enter para fechar esta janela." -ForegroundColor Yellow
+    Read-Host # Pausa o script e espera o usuário pressionar Enter
 }
