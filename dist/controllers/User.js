@@ -1,4 +1,5 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _Userjs = require('../models/User.js'); var _Userjs2 = _interopRequireDefault(_Userjs);
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }/* eslint-disable no-magic-numbers */
+var _Userjs = require('../models/User.js'); var _Userjs2 = _interopRequireDefault(_Userjs);
 var _constantsjs = require('../constants/constants.js');
 
 class UserController {
@@ -6,9 +7,22 @@ class UserController {
     let novoUser;
 
     try {
-        novoUser = await _Userjs2.default.create(req.body);
+      novoUser = await _Userjs2.default.create(req.body);
     } catch (error) {
-      return res.status( _constantsjs.HTTP_STATUS.BAD_REQUEST ).json({ errors: error.errors.map((err) => err.message) });
+      // Este console.log vai mostrar a VERDADEIRA causa do erro
+      console.log('ERRO AO CRIAR USUÁRIO:', error);
+
+      // Verifica se a lista de erros específica do Sequelize existe
+      if (error.errors && Array.isArray(error.errors)) {
+        const errorMessages = error.errors.map((err) => err.message);
+
+        return res.status(400).json({ errors: errorMessages });
+      }
+
+      // Se não, retorna uma mensagem de erro mais genérica
+      return res.status(400).json({
+        errors: [error.message || 'Ocorreu um erro ao criar o usuário.'],
+      });
     }
 
     const { id, name, email } = novoUser;
@@ -16,7 +30,7 @@ class UserController {
     return res.json({ id, name, email });
   }
 
-  async show(req, res){
+  async show(req, res) {
     const id = req.user.id;
     let user;
 
@@ -24,7 +38,7 @@ class UserController {
       user = await _Userjs2.default.findByPk(id, {
         attributes: ['id', 'name', 'email'],
       });
-    // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       return res.json(null);
     }
@@ -37,17 +51,18 @@ class UserController {
     const id = req.user.id;
     let user;
 
-    if(!id){
-      return res.status( _constantsjs.HTTP_STATUS.BAD_REQUEST ).json({ errors: ['ID do usuário não informado.'] });
+    if (!id) {
+      return res.status(_constantsjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do usuário não informado.'] });
     }
 
     try {
-      user = await _Userjs2.default.findByPk(id , {
+      user = await _Userjs2.default.findByPk(id, {
         attributes: ['id', 'name', 'email'],
       });
 
       if (!user) {
-          return res.status(_constantsjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+        return res.status(_constantsjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+
       }
 
       await user.update(req.body);
@@ -62,17 +77,17 @@ class UserController {
     const id = req.user.id;
     let user;
 
-    if(!id){
-      return res.status( _constantsjs.HTTP_STATUS.BAD_REQUEST ).json({ errors: ['ID do usuário não informado.'] });
+    if (!id) {
+      return res.status(_constantsjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do usuário não informado.'] });
     }
 
     try {
-      user = await _Userjs2.default.findByPk(id , {
+      user = await _Userjs2.default.findByPk(id, {
         attributes: ['id', 'name', 'email'],
       });
 
       if (!user) {
-          return res.status(_constantsjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+        return res.status(_constantsjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
       }
 
       await user.destroy();

@@ -24,7 +24,7 @@ if ([string]::IsNullOrWhiteSpace($commitMessage)) {
 
 # 2. Executa os comandos Git locais
 Write-Host "--- ETAPA 1: Executando comandos locais ---" -ForegroundColor Cyan
-npm build
+npm run build
 git add .
 git commit -m "$commitMessage"
 git push origin $branchName

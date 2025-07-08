@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import { hash, compare } from 'bcryptjs';
-import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, SALT_ROUNDS } from '../constants/constants';
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, VALIDATION_CONSTANTS } from '../constants/constants';
 
 export default class User extends Model {
 
@@ -52,7 +52,7 @@ export default class User extends Model {
 
     this.addHook('beforeSave', async (user) => {
       if (user.password) {
-        user.password_hash = await hash(user.password, SALT_ROUNDS);
+        user.password_hash = await hash(user.password, VALIDATION_CONSTANTS.SALT_ROUNDS);
       }
     });
 

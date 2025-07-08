@@ -52,7 +52,7 @@ var _constants = require('../constants/constants');
 
     this.addHook('beforeSave', async (user) => {
       if (user.password) {
-        user.password_hash = await _bcryptjs.hash.call(void 0, user.password, _constants.SALT_ROUNDS);
+        user.password_hash = await _bcryptjs.hash.call(void 0, user.password, _constants.VALIDATION_CONSTANTS.SALT_ROUNDS);
       }
     });
 
