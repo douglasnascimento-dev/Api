@@ -29,6 +29,8 @@ class Aluno {
   }
 
   async store(req, res) {
+      console.log('DADOS RECEBIDOS NO BODY:', req.body);
+
     try {
       const aluno = await AlunoModel.create(req.body);
 
