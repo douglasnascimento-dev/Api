@@ -41,35 +41,17 @@ var _constantsjs = require('../constants/constants.js');
         idade: {
           type: _sequelize2.default.INTEGER,
           defaultValue: 0,
-          validate: {
-            min: {
-              args: 0,
-              msg: 'A idade não pode ser negativa',
-            },
-          },
           allowNull: false,
         },
         peso: {
           type: _sequelize2.default.FLOAT,
           defaultValue: 0.0,
           allowNull: false,
-          validate: {
-            min: {
-              args: 0,
-              msg: 'O peso não pode ser negativo',
-            },
-          },
         },
         altura: {
           type: _sequelize2.default.FLOAT,
           defaultValue: 0.0,
           allowNull: false,
-          validate: {
-            min: {
-              args: 0,
-              msg: 'A altura não pode ser negativa',
-            },
-          },
         },
       },
       {

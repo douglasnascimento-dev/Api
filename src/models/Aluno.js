@@ -41,35 +41,17 @@ export default class Aluno extends Model {
         idade: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
-          validate: {
-            min: {
-              args: 0,
-              msg: 'A idade não pode ser negativa',
-            },
-          },
           allowNull: false,
         },
         peso: {
           type: Sequelize.FLOAT,
           defaultValue: 0.0,
           allowNull: false,
-          validate: {
-            min: {
-              args: 0,
-              msg: 'O peso não pode ser negativo',
-            },
-          },
         },
         altura: {
           type: Sequelize.FLOAT,
           defaultValue: 0.0,
           allowNull: false,
-          validate: {
-            min: {
-              args: 0,
-              msg: 'A altura não pode ser negativa',
-            },
-          },
         },
       },
       {
