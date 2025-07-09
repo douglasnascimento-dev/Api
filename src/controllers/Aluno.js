@@ -8,7 +8,7 @@ class Aluno {
     const alunos = await AlunoModel.findAll({
       attributes: [
         'id',
-        'nome',
+        'name',
         'sobrenome',
         'email',
         'idade',
@@ -53,7 +53,7 @@ class Aluno {
       const aluno = await AlunoModel.findByPk(id, {
         attributes: [
           'id',
-          'nome',
+          'name',
           'sobrenome',
           'email',
           'idade',
@@ -105,7 +105,7 @@ class Aluno {
       const newAluno = await aluno.update(req.body);
 
       return res.json({
-        nome: newAluno.nome,
+        name: newAluno.name,
         sobrenome: newAluno.sobrenome,
         email: newAluno.email,
         idade: newAluno.idade,
