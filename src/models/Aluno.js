@@ -42,9 +42,6 @@ export default class Aluno extends Model {
           type: Sequelize.INTEGER,
           defaultValue: 0,
           validate: {
-            isInt: {
-              msg: 'A idade deve ser um número inteiro',
-            },
             min: {
               args: 0,
               msg: 'A idade não pode ser negativa',
@@ -57,9 +54,6 @@ export default class Aluno extends Model {
           defaultValue: 0.0,
           allowNull: false,
           validate: {
-            isFloat: {
-              msg: 'O peso deve ser um número decimal',
-            },
             min: {
               args: 0,
               msg: 'O peso não pode ser negativo',
@@ -71,9 +65,6 @@ export default class Aluno extends Model {
           defaultValue: 0.0,
           allowNull: false,
           validate: {
-            isFloat: {
-              msg: 'A altura deve ser um número decimal',
-            },
             min: {
               args: 0,
               msg: 'A altura não pode ser negativa',
@@ -90,7 +81,7 @@ export default class Aluno extends Model {
     return this;
   }
 
-  static associate(models){
-    this.hasMany(models.Upload, {foreignKey: 'aluno_id'});
+  static associate(models) {
+    this.hasMany(models.Upload, { foreignKey: 'aluno_id' });
   }
 }
