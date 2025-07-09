@@ -4,7 +4,7 @@ var _loginRequiredjs = require('../middlewares/loginRequired.js'); var _loginReq
 
 const router = new (0, _express.Router)();
 
-router.get('/', _loginRequiredjs2.default, _Alunojs2.default.index);
+router.get('/', _Alunojs2.default.index);
 router.get('/:id', _Alunojs2.default.show);
 router.post('/', _loginRequiredjs2.default, _Alunojs2.default.store);
 router.put('/:id', _loginRequiredjs2.default, _Alunojs2.default.update);
