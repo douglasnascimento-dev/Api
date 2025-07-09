@@ -5,7 +5,7 @@ var _constantsjs = require('../constants/constants.js');
   static init(sequelize) {
     super.init(
       {
-        nome: {
+        name: {
           type: _sequelize2.default.STRING,
           defaultValue: '',
           allowNull: false,

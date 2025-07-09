@@ -5,7 +5,7 @@ export default class Aluno extends Model {
   static init(sequelize) {
     super.init(
       {
-        nome: {
+        name: {
           type: Sequelize.STRING,
           defaultValue: '',
           allowNull: false,
