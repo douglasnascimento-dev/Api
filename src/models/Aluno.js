@@ -42,6 +42,15 @@ export default class Aluno extends Model {
           type: Sequelize.INTEGER,
           defaultValue: 0,
           allowNull: false,
+          validate: {
+            isInt: {
+              msg: 'A idade deve ser um número inteiro',
+            },
+            min: {
+              args: [0],
+              msg: 'A idade não pode ser negativa',
+            },
+          },
         },
         peso: {
           type: Sequelize.FLOAT,
