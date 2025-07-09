@@ -8,13 +8,13 @@ module.exports = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  define : {
-    timestamps: true, // Adds createdAt and updatedAt fields
-    underscored: true, // Uses snake_case for table and column names
-    freezeTableName: true, // Prevents Sequelize from pluralizing table names
-    createAt : 'created_at', // Custom name for createdAt field
-    updatedAt : 'updated_at', // Custom name for updatedAt field
-  },
+define: {
+  timestamps: true,
+  underscored: true,
+  freezeTableName: true,
+  createdAt: 'created_at', 
+  updatedAt: 'updated_at',
+},
   dialectOptions: {
     timezone: 'America/Sao_Paulo',
   },
