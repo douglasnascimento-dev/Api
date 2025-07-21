@@ -2,95 +2,55 @@ import User from '../models/User.js';
 import { HTTP_STATUS } from '../constants/http.js';
 
 class UserController {
+
   async store(req, res) {
-    let newUser;
+    const { name, email, password } = req.body;
 
-    try {
-      newUser = await User.create(req.body);
-    } catch (error) {
+    const newUser = await User.create({ name, email, password });
 
-      if (error.errors && Array.isArray(error.errors)) {
-        const errorMessages = error.errors.map((err) => err.message);
+    const { id, name: userName, email: userEmail } = newUser;
 
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: errorMessages });
-      }
-
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({
-        errors: [error.message || 'An error occurred while creating the user.'],
-      });
-    }
-
-    const { id, name, email } = newUser;
-
-    return res.json({ id, name, email });
+    return res.status(HTTP_STATUS.CREATED).json({ id, name: userName, email: userEmail });
   }
 
   async show(req, res) {
-    const id = req.user.id;
-    let user;
+    const user = await User.findByPk(req.userId, {
+      attributes: ['id', 'name', 'email'],
+    });
 
-    try {
-      user = await User.findByPk(id, {
-        attributes: ['id', 'name', 'email'],
-      });
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      return res.json(null);
+    if (!user) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
     }
 
     return res.json(user);
   }
 
   async update(req, res) {
-    console.log(req.body, req.user);
-    const id = req.user.id;
-    let user;
+    const user = await User.findByPk(req.userId);
 
-    if (!id) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['User ID not provided.'] });
+    if (!user) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
     }
 
-    try {
-      user = await User.findByPk(id, {
-        attributes: ['id', 'name', 'email'],
-      });
+    const { name, email } = req.body;
 
-      if (!user) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
+    const updatedUser = await user.update({ name, email });
 
-      }
+    const { id, name: newName, email: newEmail } = updatedUser;
 
-      await user.update(req.body);
-    } catch (error) {
-      return res.json({ errors: error.errors.map((err) => err.message) });
-    }
-
-    return res.json(user);
+    return res.json({ id, name: newName, email: newEmail });
   }
 
   async delete(req, res) {
-    const id = req.user.id;
-    let user;
+    const user = await User.findByPk(req.userId);
 
-    if (!id) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['User ID not provided'] });
+    if (!user) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
     }
 
-    try {
-      user = await User.findByPk(id, {
-        attributes: ['id', 'name', 'email'],
-      });
+    await user.destroy();
 
-      if (!user) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found'] });
-      }
-
-      await user.destroy();
-    } catch (error) {
-      return res.json({ errors: error.errors.map((err) => err.message) });
-    }
-
-    return res.status(HTTP_STATUS.OK).json({ id: user.id });
+    return res.json({ message: 'Your account has been successfully deleted.' });
   }
 }
 

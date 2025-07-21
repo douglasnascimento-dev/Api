@@ -1,35 +1,31 @@
 import { sign } from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
 import { HTTP_STATUS } from '../constants/http.js';
-
 import User from '../models/User.js';
-dotenv.config();
-
-class Token {
+class TokenController {
   async store(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: 'Email and password are required' });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['Email and password are required'] });
     }
 
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ errors: 'User not found' });
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Invalid credentials'] });
     }
 
     if (!(await user.checkPassword(password))) {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Invalid password' });
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Invalid credentials'] });
     }
 
-    const token = sign({ id: user.id, email: user.email }, process.env.TOKEN_SECRET, {
+    const { id } = user;
+    const token = sign({ id, email }, process.env.TOKEN_SECRET, {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
 
-    return res.json({token, user: {name: user.name, id: user.id, email}});
+    return res.json({ token });
   }
 }
 
-export default new Token();
+export default new TokenController();

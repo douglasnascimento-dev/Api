@@ -1,41 +1,35 @@
-import multer from 'multer';
-
-import multerConfig from '../config/multer.js';
 import { HTTP_STATUS } from '../constants/http.js';
 import PhotoModel from '../models/Photo.js';
+import StudentModel from '../models/Student.js';
 
-const upload = multer(multerConfig).single('photo');
+class PhotoController {
+  async store(req, res) {
+    if (!req.file) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['Nenhum arquivo enviado.'] });
+    }
 
-class Photo {
-  store(req, res) {
-    return upload(req, res, async (err) => {
-      if (err) {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: [err.code] });
-      }
+    const { studentId } = req.body;
 
-      try {
-        const { originalname, filename } = req.file;
-        const studentId = req.body.studentId;
+    if (!studentId) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['O ID do estudante é obrigatório.'] });
+    }
 
-        await PhotoModel.create({
-          originalname,
-          filename,
-          studentId,
-        });
+    const student = await StudentModel.findByPk(studentId);
 
-        return res.json({
-          originalname,
-          filename,
-          studentId,
-        });
-        // eslint-disable-next-line no-unused-vars
-      } catch (e) {
-        return res
-          .status(HTTP_STATUS.BAD_REQUEST)
-          .json({ errors: ['Student not found'] });
-      }
+    if (!student) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Estudante não encontrado.'] });
+    }
+
+    const { originalname, filename } = req.file;
+
+    const photo = await PhotoModel.create({
+      originalname,
+      filename,
+      studentId,
     });
+
+    return res.status(HTTP_STATUS.CREATED).json(photo);
   }
 }
 
-export default new Photo();
+export default new PhotoController();

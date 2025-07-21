@@ -8,7 +8,6 @@ export default class Photo extends Model {
       {
         originalname: {
           type: Sequelize.STRING,
-          defaultValue: '',
           allowNull: false,
           validate: {
             notEmpty: {
@@ -18,7 +17,6 @@ export default class Photo extends Model {
         },
         filename: {
           type: Sequelize.STRING,
-          defaultValue: '',
           allowNull: false,
           validate: {
             notEmpty: {

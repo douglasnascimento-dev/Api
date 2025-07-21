@@ -10,6 +10,8 @@ import tokenRoutes from './routes/token.js';
 import studentRoutes from './routes/student.js';
 import photoRoutes from './routes/photo.js';
 
+import errorMiddleware from './middlewares/error.js';
+
 import './database/index.js';
 
 const whiteList = [
@@ -34,6 +36,7 @@ class App {
     this.app = express();
     this.middlewares();
     this.routes();
+    this.handleErrors();
   }
 
   middlewares() {
@@ -50,6 +53,10 @@ class App {
     this.app.use('/tokens', tokenRoutes);
     this.app.use('/students', studentRoutes);
     this.app.use('/api/photo', photoRoutes);
+  }
+
+  handleErrors() {
+    this.app.use(errorMiddleware);
   }
 }
 

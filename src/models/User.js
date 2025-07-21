@@ -9,9 +9,11 @@ export default class User extends Model {
       {
         name: {
           type: Sequelize.STRING,
-          defaultValue: '',
           validate: {
             len: {
+              notNull: {
+                msg: 'The name field is required.',
+              },
               args: [VALIDATION_CONSTANTS.MIN_NAME_LENGTH, VALIDATION_CONSTANTS.MAX_NAME_LENGTH],
               msg: 'The name must be between 3 and 255 characters.',
             },
@@ -19,11 +21,13 @@ export default class User extends Model {
         },
         email: {
           type: Sequelize.STRING,
-          defaultValue: '',
           unique: {
             msg: 'A user with this email already exists.',
           },
           validate: {
+            notNull: {
+              msg: 'The email field is required.',
+            },
             isEmail: {
               msg: 'The provided email is invalid.',
             },
@@ -35,8 +39,10 @@ export default class User extends Model {
         password: {
           type: Sequelize.VIRTUAL,
           allowNull: true,
-          defaultValue: '',
           validate: {
+            notNull: {
+              msg: 'The password field is required.',
+            },
             len: {
               args: [VALIDATION_CONSTANTS.MIN_PASSWORD_LENGTH, VALIDATION_CONSTANTS.MAX_PASSWORD_LENGTH],
               msg: 'The password must be between 6 and 50 characters.',
