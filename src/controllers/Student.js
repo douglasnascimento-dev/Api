@@ -1,40 +1,39 @@
-import { HTTP_STATUS } from '../constants/constants.js';
+import { HTTP_STATUS } from '../constants/http.js';
 
-import AlunoModel from '../models/Aluno.js';
-import UploadModel from '../models/Upload.js';
+import StudentModel from '../models/Student.js';
+import PhotoModel from '../models/Photo.js';
 
-class Aluno {
+class Student {
   async index(req, res) {
-    const alunos = await AlunoModel.findAll({
+    const students  = await StudentModel.findAll({
       attributes: [
         'id',
         'name',
-        'sobrenome',
+        'surname',
         'email',
-        'idade',
-        'peso',
-        'altura',
+        'age',
+        'weight',
+        'height',
       ],
       order: [
         ['id', 'ASC'],
-        [UploadModel, 'id', 'DESC'],
+        [PhotoModel, 'id', 'DESC'],
       ],
       include: {
-        model: UploadModel,
+        model: PhotoModel,
         attributes: ['id', 'filename', 'url'],
       },
     });
 
-    return res.json(alunos);
+    return res.json(students );
   }
 
   async store(req, res) {
-      console.log('DADOS RECEBIDOS NO BODY:', req.body);
 
     try {
-      const aluno = await AlunoModel.create(req.body);
+      const student = await StudentModel.create(req.body);
 
-      return res.json(aluno);
+      return res.json(student);
     } catch (e) {
       const errors = e.errors?.map((err) => err.message) || [e.message];
 
@@ -52,33 +51,33 @@ class Aluno {
           .json({ errors: ['ID not provided'] });
       }
 
-      const aluno = await AlunoModel.findByPk(id, {
+      const student = await StudentModel.findByPk(id, {
         attributes: [
           'id',
           'name',
-          'sobrenome',
+          'surname',
           'email',
-          'idade',
-          'peso',
-          'altura',
+          'age',
+          'weight',
+          'height',
         ],
         order: [
           ['id', 'ASC'],
-          [UploadModel, 'id', 'DESC'],
+          [PhotoModel, 'id', 'DESC'],
         ],
         include: {
-          model: UploadModel,
+          model: PhotoModel,
           attributes: ['id', 'filename', 'url'],
         },
       });
 
-      if (!aluno) {
+      if (!student) {
         return res
           .status(HTTP_STATUS.BAD_REQUEST)
-          .json({ errors: ['Aluno does not exist'] });
+          .json({ errors: ['Student does not exist'] });
       }
 
-      return res.json(aluno);
+      return res.json(student);
     } catch (e) {
       return res
         .status(HTTP_STATUS.BAD_REQUEST)
@@ -96,23 +95,23 @@ class Aluno {
           .json({ errors: ['ID not provided'] });
       }
 
-      const aluno = await AlunoModel.findByPk(id);
+      const student = await StudentModel.findByPk(id);
 
-      if (!aluno) {
+      if (!student) {
         return res
           .status(HTTP_STATUS.BAD_REQUEST)
-          .json({ errors: ['Aluno does not exist'] });
+          .json({ errors: ['Student does not exist'] });
       }
 
-      const newAluno = await aluno.update(req.body);
+      const newStudent = await student.update(req.body);
 
       return res.json({
-        name: newAluno.name,
-        sobrenome: newAluno.sobrenome,
-        email: newAluno.email,
-        idade: newAluno.idade,
-        peso: newAluno.peso,
-        altura: newAluno.altura,
+        name: newStudent.name,
+        surname: newStudent.surname,
+        email: newStudent.email,
+        age: newStudent.age,
+        weight: newStudent.weight,
+        height: newStudent.height,
       });
     } catch (e) {
       return res
@@ -131,17 +130,17 @@ class Aluno {
           .json({ errors: ['ID not provided'] });
       }
 
-      const aluno = await AlunoModel.findByPk(id);
+      const student = await StudentModel.findByPk(id);
 
-      if (!aluno) {
+      if (!student) {
         return res
           .status(HTTP_STATUS.BAD_REQUEST)
-          .json({ errors: ['Aluno does not exist'] });
+          .json({ errors: ['Student does not exist'] });
       }
 
-      aluno.destroy();
+      student.destroy();
 
-      return res.json(`O Aluno ${id} foi excluído com sucesso`);
+      return res.json(`Student ${id} was successfully deleted`);
     } catch (e) {
       return res
         .status(HTTP_STATUS.BAD_REQUEST)
@@ -150,4 +149,4 @@ class Aluno {
   }
 }
 
-export default new Aluno();
+export default new Student();

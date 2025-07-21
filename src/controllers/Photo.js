@@ -1,12 +1,12 @@
 import multer from 'multer';
 
 import multerConfig from '../config/multer.js';
-import { HTTP_STATUS } from '../constants/constants.js';
-import UploadModel from '../models/Upload.js';
+import { HTTP_STATUS } from '../constants/http.js';
+import PhotoModel from '../models/Photo.js';
 
-const upload = multer(multerConfig).single('photos');
+const upload = multer(multerConfig).single('photo');
 
-class Upload {
+class Photo {
   store(req, res) {
     return upload(req, res, async (err) => {
       if (err) {
@@ -15,27 +15,27 @@ class Upload {
 
       try {
         const { originalname, filename } = req.file;
-        const aluno_id = req.body.aluno_id;
+        const studentId = req.body.studentId;
 
-        await UploadModel.create({
+        await PhotoModel.create({
           originalname,
           filename,
-          aluno_id,
+          studentId,
         });
 
         return res.json({
           originalname,
           filename,
-          aluno_id,
+          studentId,
         });
         // eslint-disable-next-line no-unused-vars
       } catch (e) {
         return res
           .status(HTTP_STATUS.BAD_REQUEST)
-          .json({ errors: ['Aluno não existe'] });
+          .json({ errors: ['Student not found'] });
       }
     });
   }
 }
 
-export default new Upload();
+export default new Photo();

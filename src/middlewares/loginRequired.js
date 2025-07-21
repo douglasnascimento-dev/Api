@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../models/User.js';
-import { HTTP_STATUS } from '../constants/constants.js';
+import { HTTP_STATUS } from '../constants/http.js';
 
 dotenv.config();
 

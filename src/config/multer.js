@@ -9,7 +9,8 @@ export default {
     if (
       file.mimetype !== 'image/jpg' &&
       file.mimetype !== 'image/jpeg' &&
-      file.mimetype !== 'image/png'
+      file.mimetype !== 'image/png' &&
+      file.mimetype !== 'image/svg'
     ) {
       return cb(new multer.MulterError('Arquivo precisa ser do tipo imagem'));
     }

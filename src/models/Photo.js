@@ -1,8 +1,8 @@
 import Sequelize, { Model } from 'sequelize';
 
-import {URLCONSTANTS} from '../constants/constants';
+import { APP_CONFIG } from '../constants/config';
 
-export default class Upload extends Model {
+export default class Photo extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -12,7 +12,7 @@ export default class Upload extends Model {
           allowNull: false,
           validate: {
             notEmpty: {
-              msg: 'O Campo não pode ser vazio',
+              msg: 'The field cannot be empty',
             },
           },
         },
@@ -22,20 +22,20 @@ export default class Upload extends Model {
           allowNull: false,
           validate: {
             notEmpty: {
-              msg: 'O Campo não pode ser vazio',
+              msg: 'The field cannot be empty',
             },
           },
         },
         url: {
           type: Sequelize.VIRTUAL,
           get() {
-            return `${URLCONSTANTS.url}/images/${this.getDataValue('filename')}`;
+            return `${APP_CONFIG.url}/imgs/${this.getDataValue('filename')}`;
           }
         }
       },
       {
         sequelize,
-        tableName: 'upload'
+        tableName: 'photos'
       },
     );
 
@@ -43,8 +43,8 @@ export default class Upload extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Aluno, {
-      foreignKey: 'aluno_id',
+    this.belongsTo(models.Student, {
+      foreignKey: 'studentId',
     });
   }
 }

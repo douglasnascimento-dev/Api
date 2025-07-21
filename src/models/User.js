@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import { hash, compare } from 'bcryptjs';
-import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, VALIDATION_CONSTANTS } from '../constants/constants';
+import { VALIDATION_CONSTANTS } from '../constants/validation';
 
 export default class User extends Model {
 
@@ -12,8 +12,8 @@ export default class User extends Model {
           defaultValue: '',
           validate: {
             len: {
-              args: [MIN_NAME_LENGTH, MAX_NAME_LENGTH],
-              msg: 'O nome deve ter entre 3 e 255 caracteres.',
+              args: [VALIDATION_CONSTANTS.MIN_NAME_LENGTH, VALIDATION_CONSTANTS.MAX_NAME_LENGTH],
+              msg: 'The name must be between 3 and 255 characters.',
             },
           },
         },
@@ -21,11 +21,11 @@ export default class User extends Model {
           type: Sequelize.STRING,
           defaultValue: '',
           unique: {
-            msg: 'Já existe um usuário cadastrado com este email.',
+            msg: 'A user with this email already exists.',
           },
           validate: {
             isEmail: {
-              msg: 'O email informado é inválido.',
+              msg: 'The provided email is invalid.',
             },
           },
         },
@@ -38,8 +38,8 @@ export default class User extends Model {
           defaultValue: '',
           validate: {
             len: {
-              args: [MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH],
-              msg: 'A senha deve ter entre 6 e 50 caracteres.',
+              args: [VALIDATION_CONSTANTS.MIN_PASSWORD_LENGTH, VALIDATION_CONSTANTS.MAX_PASSWORD_LENGTH],
+              msg: 'The password must be between 6 and 50 characters.',
             },
           },
         },

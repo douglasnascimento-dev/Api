@@ -7,8 +7,8 @@ import helmet from 'helmet';
 import homeRoutes from './routes/home.js';
 import userRoutes from './routes/user.js';
 import tokenRoutes from './routes/token.js';
-import alunoRoutes from './routes/aluno.js';
-import uploadRoutes from './routes/upload.js';
+import studentRoutes from './routes/student.js';
+import photoRoutes from './routes/photo.js';
 
 import './database/index.js';
 
@@ -41,15 +41,15 @@ class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use('/images', express.static(resolve(__dirname, '..', 'uploads', 'images')));
+    this.app.use('/images', express.static(resolve(__dirname, '..', 'photo', 'images')));
   }
 
   routes() {
     this.app.use('/', homeRoutes);
     this.app.use('/users', userRoutes);
     this.app.use('/tokens', tokenRoutes);
-    this.app.use('/alunos', alunoRoutes);
-    this.app.use('/api/upload', uploadRoutes);
+    this.app.use('/students', studentRoutes);
+    this.app.use('/api/photo', photoRoutes);
   }
 }
 

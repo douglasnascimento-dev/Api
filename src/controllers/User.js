@@ -1,31 +1,26 @@
-/* eslint-disable no-magic-numbers */
 import User from '../models/User.js';
-import { HTTP_STATUS } from '../constants/constants.js';
+import { HTTP_STATUS } from '../constants/http.js';
 
 class UserController {
   async store(req, res) {
-    let novoUser;
+    let newUser;
 
     try {
-      novoUser = await User.create(req.body);
+      newUser = await User.create(req.body);
     } catch (error) {
-      // Este console.log vai mostrar a VERDADEIRA causa do erro
-      console.log('ERRO AO CRIAR USUÁRIO:', error);
 
-      // Verifica se a lista de erros específica do Sequelize existe
       if (error.errors && Array.isArray(error.errors)) {
         const errorMessages = error.errors.map((err) => err.message);
 
-        return res.status(400).json({ errors: errorMessages });
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: errorMessages });
       }
 
-      // Se não, retorna uma mensagem de erro mais genérica
-      return res.status(400).json({
-        errors: [error.message || 'Ocorreu um erro ao criar o usuário.'],
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({
+        errors: [error.message || 'An error occurred while creating the user.'],
       });
     }
 
-    const { id, name, email } = novoUser;
+    const { id, name, email } = newUser;
 
     return res.json({ id, name, email });
   }
@@ -52,7 +47,7 @@ class UserController {
     let user;
 
     if (!id) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do usuário não informado.'] });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['User ID not provided.'] });
     }
 
     try {
@@ -61,7 +56,7 @@ class UserController {
       });
 
       if (!user) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+        return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
 
       }
 
@@ -78,7 +73,7 @@ class UserController {
     let user;
 
     if (!id) {
-      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do usuário não informado.'] });
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['User ID not provided'] });
     }
 
     try {
@@ -87,7 +82,7 @@ class UserController {
       });
 
       if (!user) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+        return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found'] });
       }
 
       await user.destroy();

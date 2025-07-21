@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import tokenController from '../controllers/Token.js';
+import TokenController from '../controllers/Token.js';
 
 const router = new Router();
 
-router.post('/', tokenController.store);
+router.post('/', TokenController.store);
 
 export default router;

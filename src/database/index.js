@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
 
 import config from '../config/database.js';
-import Aluno from '../models/Aluno.js';
+import Student from '../models/Student.js';
 import User from '../models/User.js';
-import Upload from '../models/Upload.js';
+import Photo from '../models/Photo.js';
 
-const models = [Aluno, User, Upload];
+const models = [Student, User, Photo];
 const connection = new Sequelize(config);
 
 models.forEach((model) => {
