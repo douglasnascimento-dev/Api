@@ -44,7 +44,7 @@ class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use('/images', express.static(resolve(__dirname, '..', 'photo', 'images')));
+    this.app.use('/images', express.static(resolve(__dirname, '..', 'images')));
   }
 
   routes() {
@@ -52,7 +52,7 @@ class App {
     this.app.use('/users', userRoutes);
     this.app.use('/tokens', tokenRoutes);
     this.app.use('/students', studentRoutes);
-    this.app.use('/api/photo', photoRoutes);
+    this.app.use('/photo', photoRoutes);
   }
 
   handleErrors() {

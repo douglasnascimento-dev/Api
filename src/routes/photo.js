@@ -8,6 +8,8 @@ import multerConfig from '../config/multer.js';
 const upload = multer(multerConfig);
 const router = new Router();
 
-router.post('/', loginRequired, upload.single(), PhotoController.store);
+router.post('/', loginRequired, upload.single('photo'), PhotoController.store);
+router.delete('/:studentId/all', loginRequired, PhotoController.deleteAll);
+router.delete('/:studentId/:photoId', loginRequired, PhotoController.delete);
 
 export default router;

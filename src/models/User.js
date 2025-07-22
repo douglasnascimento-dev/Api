@@ -21,6 +21,7 @@ export default class User extends Model {
         },
         email: {
           type: Sequelize.STRING,
+          allowNull: false,
           unique: {
             msg: 'A user with this email already exists.',
           },
@@ -38,7 +39,7 @@ export default class User extends Model {
         },
         password: {
           type: Sequelize.VIRTUAL,
-          allowNull: true,
+          allowNull: false,
           validate: {
             notNull: {
               msg: 'The password field is required.',
