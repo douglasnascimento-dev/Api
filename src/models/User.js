@@ -9,6 +9,7 @@ export default class User extends Model {
       {
         name: {
           type: Sequelize.STRING,
+          allowNull: false,
           validate: {
             notNull: {
               msg: 'The name field is required.',
@@ -49,10 +50,6 @@ export default class User extends Model {
               msg: 'The password must be between 6 and 50 characters.',
             },
           },
-        },
-        role: {
-          type: Sequelize.STRING,
-          defaultValue: 'user',
         },
       },
       {

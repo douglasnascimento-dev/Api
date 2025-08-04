@@ -1,5 +1,3 @@
 import app from './app.js';
 
-app.listen(process.env.APP_PORT, () => {
-  console.log('Rodando...');
-});
+app.listen(process.env.APP_PORT);

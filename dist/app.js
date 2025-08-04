@@ -7,8 +7,10 @@ var _helmet = require('helmet'); var _helmet2 = _interopRequireDefault(_helmet);
 var _homejs = require('./routes/home.js'); var _homejs2 = _interopRequireDefault(_homejs);
 var _userjs = require('./routes/user.js'); var _userjs2 = _interopRequireDefault(_userjs);
 var _tokenjs = require('./routes/token.js'); var _tokenjs2 = _interopRequireDefault(_tokenjs);
-var _alunojs = require('./routes/aluno.js'); var _alunojs2 = _interopRequireDefault(_alunojs);
-var _uploadjs = require('./routes/upload.js'); var _uploadjs2 = _interopRequireDefault(_uploadjs);
+var _studentjs = require('./routes/student.js'); var _studentjs2 = _interopRequireDefault(_studentjs);
+var _photojs = require('./routes/photo.js'); var _photojs2 = _interopRequireDefault(_photojs);
+
+var _errorjs = require('./middlewares/error.js'); var _errorjs2 = _interopRequireDefault(_errorjs);
 
 require('./database/index.js');
 
@@ -34,6 +36,7 @@ class App {
     this.app = _express2.default.call(void 0, );
     this.middlewares();
     this.routes();
+    this.handleErrors();
   }
 
   middlewares() {
@@ -41,15 +44,19 @@ class App {
     this.app.use(_helmet2.default.call(void 0, ));
     this.app.use(_express2.default.json());
     this.app.use(_express2.default.urlencoded({ extended: true }));
-    this.app.use('/images', _express2.default.static(_path.resolve.call(void 0, __dirname, '..', 'uploads', 'images')));
+    this.app.use('/images', _express2.default.static(_path.resolve.call(void 0, __dirname, '..', 'images')));
   }
 
   routes() {
     this.app.use('/', _homejs2.default);
     this.app.use('/users', _userjs2.default);
     this.app.use('/tokens', _tokenjs2.default);
-    this.app.use('/alunos', _alunojs2.default);
-    this.app.use('/api/upload', _uploadjs2.default);
+    this.app.use('/students', _studentjs2.default);
+    this.app.use('/photo', _photojs2.default);
+  }
+
+  handleErrors() {
+    this.app.use(_errorjs2.default);
   }
 }
 

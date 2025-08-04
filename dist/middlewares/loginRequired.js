@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _jsonwebtoken = require('jsonwebtoken'); var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 var _dotenv = require('dotenv'); var _dotenv2 = _interopRequireDefault(_dotenv);
 var _Userjs = require('../models/User.js'); var _Userjs2 = _interopRequireDefault(_Userjs);
-var _constantsjs = require('../constants/constants.js');
+var _httpjs = require('../constants/http.js');
 
 _dotenv2.default.config();
 
@@ -33,13 +33,13 @@ exports. default = async function (req, res, next) {
   const token = getTokenFromHeader(req.headers.authorization);
 
   if (!token) {
-    return res.status(_constantsjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Token não informado ou mal formatado' });
+    return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Token não informado ou mal formatado' });
   }
 
   const userData = await getUserFromToken(token);
 
   if (!userData) {
-    return res.status(_constantsjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Token inválido. Gere um novo Token' });
+    return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Token inválido. Gere um novo Token' });
   }
 
   req.user = userData;

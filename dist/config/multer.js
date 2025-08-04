@@ -2,26 +2,27 @@
 var _path = require('path');
 
 // eslint-disable-next-line no-magic-numbers
-const aleatoria = () => Math.floor(Math.random() * 10000 + 10000);
+const random = () => Math.floor(Math.random() * 10000 + 10000);
 
 exports. default = {
   fileFilter: (req, file, cb) => {
     if (
       file.mimetype !== 'image/jpg' &&
       file.mimetype !== 'image/jpeg' &&
-      file.mimetype !== 'image/png'
+      file.mimetype !== 'image/png' &&
+      file.mimetype !== 'image/svg'
     ) {
-      return cb(new _multer2.default.MulterError('Arquivo precisa ser do tipo imagem'));
+      return cb(new _multer2.default.MulterError('File must be an image type'));
     }
 
     return cb(null, true);
   },
   storage: _multer2.default.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, _path.resolve.call(void 0, __dirname, '..', '..', 'uploads', 'images'));
+      cb(null, _path.resolve.call(void 0, __dirname, '..', '..', 'images'));
     },
     filename: (req, file, cb) => {
-      cb(null, `${Date.now()}_${aleatoria()}${_path.extname.call(void 0, file.originalname)}`);
+      cb(null, `${Date.now()}_${random()}${_path.extname.call(void 0, file.originalname)}`);
     },
   }),
 };

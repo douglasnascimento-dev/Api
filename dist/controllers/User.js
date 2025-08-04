@@ -1,101 +1,56 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }/* eslint-disable no-magic-numbers */
-var _Userjs = require('../models/User.js'); var _Userjs2 = _interopRequireDefault(_Userjs);
-var _constantsjs = require('../constants/constants.js');
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _Userjs = require('../models/User.js'); var _Userjs2 = _interopRequireDefault(_Userjs);
+var _httpjs = require('../constants/http.js');
 
 class UserController {
+
   async store(req, res) {
-    let novoUser;
+    const { name, email, password } = req.body;
 
-    try {
-      novoUser = await _Userjs2.default.create(req.body);
-    } catch (error) {
-      // Este console.log vai mostrar a VERDADEIRA causa do erro
-      console.log('ERRO AO CRIAR USUÁRIO:', error);
+    const newUser = await _Userjs2.default.create({ name, email, password });
 
-      // Verifica se a lista de erros específica do Sequelize existe
-      if (error.errors && Array.isArray(error.errors)) {
-        const errorMessages = error.errors.map((err) => err.message);
+    const { id, name: userName, email: userEmail } = newUser;
 
-        return res.status(400).json({ errors: errorMessages });
-      }
-
-      // Se não, retorna uma mensagem de erro mais genérica
-      return res.status(400).json({
-        errors: [error.message || 'Ocorreu um erro ao criar o usuário.'],
-      });
-    }
-
-    const { id, name, email } = novoUser;
-
-    return res.json({ id, name, email });
+    return res.status(_httpjs.HTTP_STATUS.CREATED).json({ id, name: userName, email: userEmail });
   }
 
   async show(req, res) {
-    const id = req.user.id;
-    let user;
+    const user = await _Userjs2.default.findByPk(req.userId, {
+      attributes: ['id', 'name', 'email'],
+    });
 
-    try {
-      user = await _Userjs2.default.findByPk(id, {
-        attributes: ['id', 'name', 'email'],
-      });
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      return res.json(null);
+    if (!user) {
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
     }
 
     return res.json(user);
   }
 
   async update(req, res) {
-    console.log(req.body, req.user);
-    const id = req.user.id;
-    let user;
+    const user = await _Userjs2.default.findByPk(req.userId);
 
-    if (!id) {
-      return res.status(_constantsjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do usuário não informado.'] });
+    if (!user) {
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
     }
 
-    try {
-      user = await _Userjs2.default.findByPk(id, {
-        attributes: ['id', 'name', 'email'],
-      });
+    const { name, email } = req.body;
 
-      if (!user) {
-        return res.status(_constantsjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
+    const updatedUser = await user.update({ name, email });
 
-      }
+    const { id, name: newName, email: newEmail } = updatedUser;
 
-      await user.update(req.body);
-    } catch (error) {
-      return res.json({ errors: error.errors.map((err) => err.message) });
-    }
-
-    return res.json(user);
+    return res.json({ id, name: newName, email: newEmail });
   }
 
   async delete(req, res) {
-    const id = req.user.id;
-    let user;
+    const user = await _Userjs2.default.findByPk(req.userId);
 
-    if (!id) {
-      return res.status(_constantsjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do usuário não informado.'] });
+    if (!user) {
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
     }
 
-    try {
-      user = await _Userjs2.default.findByPk(id, {
-        attributes: ['id', 'name', 'email'],
-      });
+    await user.destroy();
 
-      if (!user) {
-        return res.status(_constantsjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
-      }
-
-      await user.destroy();
-    } catch (error) {
-      return res.json({ errors: error.errors.map((err) => err.message) });
-    }
-
-    return res.status(_constantsjs.HTTP_STATUS.OK).json({ id: user.id });
+    return res.json({ message: 'Your account has been successfully deleted.' });
   }
 }
 

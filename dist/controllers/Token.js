@@ -1,35 +1,31 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _jsonwebtoken = require('jsonwebtoken');
-var _dotenv = require('dotenv'); var _dotenv2 = _interopRequireDefault(_dotenv);
-
-var _constantsjs = require('../constants/constants.js');
-
+var _httpjs = require('../constants/http.js');
 var _Userjs = require('../models/User.js'); var _Userjs2 = _interopRequireDefault(_Userjs);
-_dotenv2.default.config();
-
-class Token {
+class TokenController {
   async store(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(_constantsjs.HTTP_STATUS.BAD_REQUEST).json({ errors: 'O Email e a senha são necessários' });
+      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['Email and password are required'] });
     }
 
     const user = await _Userjs2.default.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(_constantsjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Usuário não encontrado' });
+      return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Invalid credentials'] });
     }
 
     if (!(await user.checkPassword(password))) {
-      return res.status(_constantsjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: 'Senha inválida' });
+      return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Invalid credentials'] });
     }
 
-    const token = _jsonwebtoken.sign.call(void 0, { id: user.id, email: user.email }, process.env.TOKEN_SECRET, {
+    const { id } = user;
+    const token = _jsonwebtoken.sign.call(void 0, { id, email }, process.env.TOKEN_SECRET, {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
 
-    return res.json({token, user: {name: user.name, id: user.id, email}});
+    return res.json({ token });
   }
 }
 
-exports. default = new Token();
+exports. default = new TokenController();

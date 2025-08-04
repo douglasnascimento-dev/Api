@@ -10,12 +10,3 @@ router.put('/', _loginRequiredjs2.default,  _Userjs2.default.update);
 router.delete('/', _loginRequiredjs2.default, _Userjs2.default.delete);
 
 exports. default = router;
-
-/* Nomes para controllers
-- ATÉ 5 MÉTODOS
-- index: lista todos os registros - GET
-- create/store: cria um novo registro - POST
-- delete: deleta um registro - DELETE
-- show: exibe um registro específico - GET
-- update: atualiza um registro específico - PATCH ou PUT
-*/
