@@ -3,7 +3,7 @@ import { HTTP_STATUS } from '../constants/http.js';
 import User from '../models/User.js';
 class TokenController {
   async store(req, res) {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     if (!email || !password) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({ errors: ['Email and password are required'] });
@@ -20,7 +20,7 @@ class TokenController {
     }
 
     const { id } = user;
-    const token = sign({ id, email }, process.env.TOKEN_SECRET, {
+    const token = sign({ id, email, role }, process.env.TOKEN_SECRET, {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
 

@@ -10,10 +10,10 @@ export default class User extends Model {
         name: {
           type: Sequelize.STRING,
           validate: {
+            notNull: {
+              msg: 'The name field is required.',
+            },
             len: {
-              notNull: {
-                msg: 'The name field is required.',
-              },
               args: [VALIDATION_CONSTANTS.MIN_NAME_LENGTH, VALIDATION_CONSTANTS.MAX_NAME_LENGTH],
               msg: 'The name must be between 3 and 255 characters.',
             },
@@ -49,6 +49,10 @@ export default class User extends Model {
               msg: 'The password must be between 6 and 50 characters.',
             },
           },
+        },
+        role: {
+          type: Sequelize.STRING,
+          defaultValue: 'user',
         },
       },
       {
