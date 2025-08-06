@@ -9,7 +9,7 @@ class StudentController {
       order: [['id', 'ASC'], [PhotoModel, 'id', 'DESC']],
       include: {
         model: PhotoModel,
-        as: 'photo',
+        as: 'photos',
         attributes: ['id', 'filename', 'url'],
       },
     });
@@ -40,7 +40,7 @@ class StudentController {
       order: [['id', 'ASC'], [PhotoModel, 'id', 'DESC']],
       include: {
         model: PhotoModel,
-        as: 'photo',
+        as: 'photos',
         attributes: ['id', 'filename', 'url'],
       },
     });
