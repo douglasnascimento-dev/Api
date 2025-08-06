@@ -10,11 +10,11 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The name field is required.',
+              msg: 'O campo nome é obrigatório.',
             },
             len: {
               args: [_validation.MIN_NAME_LENGTH, _validation.MAX_NAME_LENGTH],
-              msg: 'The name must be between 3 and 255 characters.',
+              msg: 'O nome deve ter entre 3 e 255 caracteres.',
             },
           },
         },
@@ -23,11 +23,11 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The surname field is required.',
+              msg: 'O campo sobrenome é obrigatório.',
             },
             len: {
               args: [_validation.MIN_NAME_LENGTH, _validation.MAX_NAME_LENGTH],
-              msg: 'The surname must be between 3 and 255 characters.',
+              msg: 'O sobrenome deve ter entre 3 e 255 caracteres.',
             },
           },
         },
@@ -35,14 +35,14 @@ var _validation = require('../constants/validation');
           type: _sequelize2.default.STRING,
           allowNull: false,
           unique: {
-            msg: 'This email is already registered.',
+            msg: 'Este e-mail já está cadastrado.',
           },
           validate: {
             notNull: {
-              msg: 'The EMAIL field is required.',
+              msg: 'O campo e-mail é obrigatório.',
             },
             isEmail: {
-              msg: 'The email must be a valid email address.',
+              msg: 'O e-mail deve ser um endereço de e-mail válido.',
             },
           },
         },
@@ -51,14 +51,14 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The age field is required.',
+              msg: 'O campo idade é obrigatório.',
             },
             isInt: {
-              msg: 'The age must be an integer.',
+              msg: 'A idade deve ser um número inteiro.',
             },
             min: {
               args: [0],
-              msg: 'The age cannot be negative.',
+              msg: 'A idade não pode ser negativa.',
             },
           },
         },
@@ -67,14 +67,14 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The weight field is required.',
+              msg: 'O campo peso é obrigatório.',
             },
             isFloat: {
-              msg: 'The weight must be a number.',
+              msg: 'O peso deve ser um número.',
             },
             min: {
               args: [0],
-              msg: 'The weight cannot be negative.',
+              msg: 'O peso não pode ser negativo.',
             },
           },
         },
@@ -83,14 +83,14 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The height field is required.',
+              msg: 'O campo altura é obrigatório.',
             },
             isFloat: {
-              msg: 'The height must be a number.',
+              msg: 'A altura deve ser um número.',
             },
             min: {
               args: [0],
-              msg: 'The height cannot be negative.',
+              msg: 'A altura não pode ser negativa.',
             },
           },
         },
@@ -105,6 +105,6 @@ var _validation = require('../constants/validation');
   }
 
   static associate(models) {
-    this.hasMany(models.Photo, { foreignKey: 'studentId' });
+    this.hasMany(models.Photo, { foreignKey: 'studentId', as: 'photos' });
   }
 } exports.default = Student;

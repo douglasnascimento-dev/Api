@@ -19,7 +19,7 @@ class UserController {
     });
 
     if (!user) {
-      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
     }
 
     return res.json(user);
@@ -29,7 +29,7 @@ class UserController {
     const user = await _Userjs2.default.findByPk(req.userId);
 
     if (!user) {
-      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
     }
 
     const { name, email } = req.body;
@@ -45,12 +45,12 @@ class UserController {
     const user = await _Userjs2.default.findByPk(req.userId);
 
     if (!user) {
-      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['User not found.'] });
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
     }
 
     await user.destroy();
 
-    return res.json({ message: 'Your account has been successfully deleted.' });
+    return res.json({ message: 'Sua conta foi excluída com sucesso.' });
   }
 }
 

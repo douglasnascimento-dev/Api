@@ -12,11 +12,11 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The name field is required.',
+              msg: 'O campo nome é obrigatório.',
             },
             len: {
               args: [_validation.VALIDATION_CONSTANTS.MIN_NAME_LENGTH, _validation.VALIDATION_CONSTANTS.MAX_NAME_LENGTH],
-              msg: 'The name must be between 3 and 255 characters.',
+              msg: 'O nome deve ter entre 3 e 255 caracteres.',
             },
           },
         },
@@ -24,14 +24,14 @@ var _validation = require('../constants/validation');
           type: _sequelize2.default.STRING,
           allowNull: false,
           unique: {
-            msg: 'A user with this email already exists.',
+            msg: 'Já existe um usuário com este e-mail.',
           },
           validate: {
             notNull: {
-              msg: 'The email field is required.',
+              msg: 'O campo e-mail é obrigatório.',
             },
             isEmail: {
-              msg: 'The provided email is invalid.',
+              msg: 'O e-mail informado é inválido.',
             },
           },
         },
@@ -43,11 +43,11 @@ var _validation = require('../constants/validation');
           allowNull: false,
           validate: {
             notNull: {
-              msg: 'The password field is required.',
+              msg: 'O campo senha é obrigatório.',
             },
             len: {
               args: [_validation.VALIDATION_CONSTANTS.MIN_PASSWORD_LENGTH, _validation.VALIDATION_CONSTANTS.MAX_PASSWORD_LENGTH],
-              msg: 'The password must be between 6 and 50 characters.',
+              msg: 'A senha deve ter entre 6 e 50 caracteres.',
             },
           },
         },

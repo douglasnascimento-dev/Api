@@ -12,7 +12,7 @@ exports. default = {
       file.mimetype !== 'image/png' &&
       file.mimetype !== 'image/svg'
     ) {
-      return cb(new _multer2.default.MulterError('File must be an image type'));
+      return cb(new _multer2.default.MulterError('O Tipo do arquivo precisa ser uma imagem'));
     }
 
     return cb(null, true);

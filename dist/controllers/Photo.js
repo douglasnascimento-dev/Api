@@ -5,19 +5,19 @@ var _Studentjs = require('../models/Student.js'); var _Studentjs2 = _interopRequ
 class PhotoController {
   async store(req, res) {
     if (!req.file) {
-      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['No file uploaded.'] });
+      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['Nenhum arquivo enviado.'] });
     }
 
     const { studentId } = req.body;
 
     if (!studentId) {
-      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['Student ID is required.'] });
+      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['ID do aluno é obrigatório.'] });
     }
 
     const student = await _Studentjs2.default.findByPk(studentId);
 
     if (!student) {
-      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Student not found.'] });
+      return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
     }
 
     const { originalname, filename } = req.file;
@@ -44,10 +44,10 @@ class PhotoController {
     if (photo) {
       await photo.destroy();
 
-      return res.json({ message: 'Photo deleted successfully.' });
+      return res.json({ message: 'Foto removida com sucesso.' });
     }
 
-    return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Photo not found for this student.'] });
+    return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({ errors: ['Foto não encontrada para este aluno.'] });
   }
 
   async deleteAll(req, res) {
@@ -61,11 +61,11 @@ class PhotoController {
 
     if (deletedCount === 0) {
       return res.status(_httpjs.HTTP_STATUS.NOT_FOUND).json({
-        errors: ['No photos found for this student.'],
+        errors: ['Nenhuma foto encontrada para este aluno.'],
       });
     }
 
-    return res.json({ message: `${deletedCount} photo(s) deleted successfully.` });
+    return res.json({ message: `${deletedCount} foto(s) removida(s) com sucesso.` });
   }
 }
 

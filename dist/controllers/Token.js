@@ -6,17 +6,17 @@ class TokenController {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['Email and password are required'] });
+      return res.status(_httpjs.HTTP_STATUS.BAD_REQUEST).json({ errors: ['Email e senha são obrigatórios'] });
     }
 
     const user = await _Userjs2.default.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Invalid credentials'] });
+      return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Credenciais inválidas'] });
     }
 
     if (!(await user.checkPassword(password))) {
-      return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Invalid credentials'] });
+      return res.status(_httpjs.HTTP_STATUS.UNAUTHORIZED).json({ errors: ['Credenciais inválidas'] });
     }
 
     const { id } = user;
@@ -24,7 +24,14 @@ class TokenController {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
 
-    return res.json({ token, user });
+    return res.json({
+      token,
+      user: {
+        id: user.id,
+        nome: user.nome,
+        email: user.email,
+      },
+    });
   }
 }
 

@@ -11,7 +11,7 @@ var _config = require('../constants/config');
           allowNull: false,
           validate: {
             notEmpty: {
-              msg: 'The field cannot be empty',
+              msg: 'O campo não pode estar vazio.',
             },
           },
         },
@@ -20,7 +20,7 @@ var _config = require('../constants/config');
           allowNull: false,
           validate: {
             notEmpty: {
-              msg: 'The field cannot be empty',
+              msg: 'O campo não pode estar vazio.',
             },
           },
         },

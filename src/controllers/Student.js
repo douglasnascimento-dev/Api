@@ -44,7 +44,7 @@ class StudentController {
     });
 
     if (!student) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Student not found'] });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
     }
 
     return res.json(student);
@@ -55,7 +55,7 @@ class StudentController {
     const student = await StudentModel.findByPk(id);
 
     if (!student) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Student not found'] });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
     }
 
     const { name, surname, email, age, weight, height } = req.body;
@@ -77,12 +77,12 @@ class StudentController {
     const student = await StudentModel.findByPk(id);
 
     if (!student) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Student not found'] });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
     }
 
     await student.destroy();
 
-    return res.json({ message: `Student ${id} was successfully deleted.` });
+    return res.json({ message: `Aluno ${id} foi removido com sucesso.` });
   }
 }
 
