@@ -9,6 +9,7 @@ class StudentController {
       order: [['id', 'ASC'], [_Photojs2.default, 'id', 'DESC']],
       include: {
         model: _Photojs2.default,
+        as: 'photo',
         attributes: ['id', 'filename', 'url'],
       },
     });
@@ -39,6 +40,7 @@ class StudentController {
       order: [['id', 'ASC'], [_Photojs2.default, 'id', 'DESC']],
       include: {
         model: _Photojs2.default,
+        as: 'photo',
         attributes: ['id', 'filename', 'url'],
       },
     });
