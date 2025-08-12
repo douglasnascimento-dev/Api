@@ -4,6 +4,8 @@ import { resolve } from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 
+import './database/index.js';
+
 import homeRoutes from './routes/home.js';
 import userRoutes from './routes/user.js';
 import tokenRoutes from './routes/token.js';
@@ -11,8 +13,6 @@ import studentRoutes from './routes/student.js';
 import photoRoutes from './routes/photo.js';
 
 import errorMiddleware from './middlewares/error.js';
-
-import './database/index.js';
 
 const whiteList = [
   'https://projeto1.douglasnascimento.dev.br',
