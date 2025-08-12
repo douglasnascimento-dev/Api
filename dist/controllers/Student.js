@@ -6,7 +6,7 @@ class StudentController {
   async index(req, res) {
     const students = await _Studentjs2.default.findAll({
       attributes: ['id', 'name', 'surname', 'email', 'age', 'weight', 'height'],
-      order: [['id', 'ASC'], [_Photojs2.default, 'id', 'DESC']],
+      order: [['id', 'ASC'], ['photos', 'id', 'DESC']],
       include: {
         model: _Photojs2.default,
         as: 'photos',

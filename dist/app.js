@@ -4,6 +4,8 @@ var _path = require('path');
 var _cors = require('cors'); var _cors2 = _interopRequireDefault(_cors);
 var _helmet = require('helmet'); var _helmet2 = _interopRequireDefault(_helmet);
 
+require('./database/index.js');
+
 var _homejs = require('./routes/home.js'); var _homejs2 = _interopRequireDefault(_homejs);
 var _userjs = require('./routes/user.js'); var _userjs2 = _interopRequireDefault(_userjs);
 var _tokenjs = require('./routes/token.js'); var _tokenjs2 = _interopRequireDefault(_tokenjs);
@@ -11,8 +13,6 @@ var _studentjs = require('./routes/student.js'); var _studentjs2 = _interopRequi
 var _photojs = require('./routes/photo.js'); var _photojs2 = _interopRequireDefault(_photojs);
 
 var _errorjs = require('./middlewares/error.js'); var _errorjs2 = _interopRequireDefault(_errorjs);
-
-require('./database/index.js');
 
 const whiteList = [
   'https://projeto1.douglasnascimento.dev.br',
@@ -41,7 +41,9 @@ class App {
 
   middlewares() {
     this.app.use(_cors2.default.call(void 0, corsOptions));
-    this.app.use(_helmet2.default.call(void 0, ));
+    this.app.use(_helmet2.default.call(void 0, {
+      crossOriginResourcePolicy: false,
+    }));
     this.app.use(_express2.default.json());
     this.app.use(_express2.default.urlencoded({ extended: true }));
     this.app.use('/images', _express2.default.static(_path.resolve.call(void 0, __dirname, '..', 'images')));

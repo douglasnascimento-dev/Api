@@ -105,6 +105,6 @@ var _validation = require('../constants/validation');
   }
 
   static associate(models) {
-    this.hasMany(models.Photo, { foreignKey: 'studentId', as: 'photos' });
+    this.hasMany(models.Photo, { foreignKey: 'student_id', as: 'photos' });
   }
 } exports.default = Student;

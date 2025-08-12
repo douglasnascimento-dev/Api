@@ -41,8 +41,6 @@ var _config = require('../constants/config');
   }
 
   static associate(models) {
-    this.belongsTo(models.Student, {
-      foreignKey: 'studentId',
-    });
-  }
+    this.belongsTo(models.Student, { foreignKey: 'student_id', as: 'student' });
+    }
 } exports.default = Photo;
