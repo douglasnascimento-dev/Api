@@ -28,12 +28,16 @@ var _config = require('../constants/config');
           type: _sequelize2.default.VIRTUAL,
           get() {
             return `${_config.APP_CONFIG.url}/images/${this.getDataValue('filename')}`;
-          }
-        }
+          },
+        },
+        student_id: {
+          type: _sequelize2.default.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
-        tableName: 'photos'
+        tableName: 'photos',
       },
     );
 
@@ -42,5 +46,5 @@ var _config = require('../constants/config');
 
   static associate(models) {
     this.belongsTo(models.Student, { foreignKey: 'student_id', as: 'student' });
-    }
+  }
 } exports.default = Photo;

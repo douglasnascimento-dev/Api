@@ -3,7 +3,6 @@ var _bcryptjs = require('bcryptjs');
 var _validation = require('../constants/validation');
 
  class User extends _sequelize.Model {
-
   static init(sequelize) {
     super.init(
       {

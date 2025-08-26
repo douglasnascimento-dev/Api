@@ -3,7 +3,6 @@ import { hash, compare } from 'bcryptjs';
 import { VALIDATION_CONSTANTS } from '../constants/validation';
 
 export default class User extends Model {
-
   static init(sequelize) {
     super.init(
       {
