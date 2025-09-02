@@ -37,7 +37,7 @@ class StudentController {
 
     const student = await _Studentjs2.default.findByPk(id, {
       attributes: ['id', 'name', 'surname', 'email', 'age', 'weight', 'height'],
-      order: [['id', 'ASC'], ['photos', 'id', 'DESC']],
+      order: [['id', 'ASC'], [_Photojs2.default, 'id', 'DESC']],
       include: {
         model: _Photojs2.default,
         as: 'photos',

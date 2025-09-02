@@ -25,7 +25,7 @@ class PhotoController {
     const photo = await PhotoModel.create({
       originalname,
       filename,
-      studentId,
+      student_id: studentId,
     });
 
     return res.status(HTTP_STATUS.CREATED).json(photo);
