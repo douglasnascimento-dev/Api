@@ -1,5 +1,4 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _sequelize = require('sequelize'); var _sequelize2 = _interopRequireDefault(_sequelize);
-
 var _config = require('../constants/config');
 
  class Photo extends _sequelize.Model {
@@ -30,9 +29,11 @@ var _config = require('../constants/config');
             return `${_config.APP_CONFIG.url}/images/${this.getDataValue('filename')}`;
           },
         },
-        student_id: {
+        // 👇 ALTERAÇÃO AQUI 👇
+        studentId: {
           type: _sequelize2.default.INTEGER,
           allowNull: false,
+          field: 'student_id', // Mapeia para a coluna do banco de dados
         },
       },
       {
