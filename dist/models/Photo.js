@@ -29,11 +29,10 @@ var _config = require('../constants/config');
             return `${_config.APP_CONFIG.url}/images/${this.getDataValue('filename')}`;
           },
         },
-        // 👇 ALTERAÇÃO AQUI 👇
         studentId: {
           type: _sequelize2.default.INTEGER,
           allowNull: false,
-          field: 'student_id', // Mapeia para a coluna do banco de dados
+          field: 'student_id',
         },
       },
       {

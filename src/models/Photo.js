@@ -29,11 +29,10 @@ export default class Photo extends Model {
             return `${APP_CONFIG.url}/images/${this.getDataValue('filename')}`;
           },
         },
-        // 👇 ALTERAÇÃO AQUI 👇
         studentId: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          field: 'student_id', // Mapeia para a coluna do banco de dados
+          field: 'student_id',
         },
       },
       {

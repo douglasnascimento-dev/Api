@@ -37,7 +37,7 @@ class PhotoController {
     const photo = await _Photojs2.default.findOne({
       where: {
         id: photoId,
-        student_id: studentId,
+        studentId,
       },
     });
 
@@ -55,7 +55,7 @@ class PhotoController {
 
     const deletedCount = await _Photojs2.default.destroy({
       where: {
-        student_id: studentId,
+         studentId,
       },
     });
 

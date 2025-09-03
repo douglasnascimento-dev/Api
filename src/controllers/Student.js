@@ -1,6 +1,5 @@
 import { HTTP_STATUS } from '../constants/http.js';
 import StudentModel from '../models/Student.js';
-import PhotoModel from '../models/Photo.js';
 
 class StudentController {
   async index(req, res) {
@@ -8,8 +7,7 @@ class StudentController {
       attributes: ['id', 'name', 'surname', 'email', 'age', 'weight', 'height'],
       order: [['id', 'ASC'], ['photos', 'id', 'DESC']],
       include: {
-        model: PhotoModel,
-        as: 'photos',
+        association: 'photos',
         attributes: ['id', 'filename', 'url'],
       },
     });
@@ -19,7 +17,6 @@ class StudentController {
 
   async store(req, res) {
     const { name, surname, email, age, weight, height } = req.body;
-
     const student = await StudentModel.create({
       name,
       surname,
@@ -37,16 +34,17 @@ class StudentController {
 
     const student = await StudentModel.findByPk(id, {
       attributes: ['id', 'name', 'surname', 'email', 'age', 'weight', 'height'],
-      order: [['id', 'ASC'], [PhotoModel, 'id', 'DESC']],
+      order: [['id', 'ASC'], ['photos', 'id', 'DESC']],
       include: {
-        model: PhotoModel,
-        as: 'photos',
+        association: 'photos',
         attributes: ['id', 'filename', 'url'],
       },
     });
 
     if (!student) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ errors: ['Aluno não encontrado.'] });
     }
 
     return res.json(student);
@@ -57,11 +55,12 @@ class StudentController {
     const student = await StudentModel.findByPk(id);
 
     if (!student) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ errors: ['Aluno não encontrado.'] });
     }
 
     const { name, surname, email, age, weight, height } = req.body;
-
     const updatedStudent = await student.update({
       name,
       surname,
@@ -79,7 +78,9 @@ class StudentController {
     const student = await StudentModel.findByPk(id);
 
     if (!student) {
-      return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Aluno não encontrado.'] });
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ errors: ['Aluno não encontrado.'] });
     }
 
     await student.destroy();
