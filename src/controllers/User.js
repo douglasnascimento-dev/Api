@@ -25,7 +25,7 @@ class UserController {
   }
 
   async update(req, res) {
-    const user = await User.findByPk(req.userId);
+    const user = await User.findByPk(req.user.id);
 
     if (!user) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ errors: ['Usuário não encontrado.'] });
