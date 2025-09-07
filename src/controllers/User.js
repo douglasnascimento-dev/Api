@@ -2,7 +2,6 @@ import User from '../models/User.js';
 import { HTTP_STATUS } from '../constants/http.js';
 
 class UserController {
-
   async store(req, res) {
     const { name, email, password } = req.body;
 
@@ -14,7 +13,7 @@ class UserController {
   }
 
   async show(req, res) {
-    const user = await User.findByPk(req.userId, {
+    const user = await User.findByPk(req.user.id, {
       attributes: ['id', 'name', 'email'],
     });
 

@@ -2,7 +2,6 @@
 var _httpjs = require('../constants/http.js');
 
 class UserController {
-
   async store(req, res) {
     const { name, email, password } = req.body;
 
@@ -14,7 +13,7 @@ class UserController {
   }
 
   async show(req, res) {
-    const user = await _Userjs2.default.findByPk(req.userId, {
+    const user = await _Userjs2.default.findByPk(req.user.id, {
       attributes: ['id', 'name', 'email'],
     });
 
