@@ -33,6 +33,7 @@ class UserController {
 
     const { name, email } = req.body;
 
+console.log(name, email);
     const updatedUser = await user.update({ name, email });
 
     const { id, name: newName, email: newEmail } = updatedUser;

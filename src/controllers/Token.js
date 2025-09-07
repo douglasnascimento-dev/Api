@@ -28,7 +28,7 @@ class TokenController {
       token,
       user: {
         id: user.id,
-        nome: user.name,
+        name: user.name,
         email: user.email,
       },
     });
